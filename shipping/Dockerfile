@@ -1,4 +1,4 @@
-FROM maven:3.9.11
+FROM maven:3.9.11-openjdk-17
 EXPOSE 8080
 WORKDIR /opt/server
 COPY pom.xml .
