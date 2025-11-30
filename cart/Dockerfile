@@ -11,7 +11,6 @@ FROM node:20.19.5-alpine3.22
 WORKDIR /opt/server
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop && \
     chown -R roboshop:roboshop /opt/server
-COPY --from=build --chown=roboshop:roboshop /opt/server /opt/server
 EXPOSE 8080
 LABEL com.project="roboshop" \
       component="cart" \
@@ -19,6 +18,7 @@ LABEL com.project="roboshop" \
 ENV REDIS_HOST="redis" \
     CATALOGUE_HOST="catalogue" \
     CATALOGUE_PORT="8080"
+COPY --from=build --chown=roboshop:roboshop /opt/server /opt/server
 RUN chown -R roboshop:roboshop /opt/server
 USER roboshop
 CMD ["server.js"]
