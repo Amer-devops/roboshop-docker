@@ -3,13 +3,13 @@ services:
     build:
       context: ./catalogue
       dockerfile: Dockerfile
-    image: catalogue:v1
+    image: amer9722/catalogue:v1
     container_name: catalogue
     depends_on:
     - mongodb
   mongodb:
     build: ./mongodb
-    image: mongodb:v1
+    image: amer9722/mongodb:v1
     container_name: mongodb
     volumes:
     - mongodb:/data/db
@@ -20,7 +20,7 @@ services:
     - redis:/data
   mysql:
     build: ./mysql
-    image: mysql:v1
+    image: amer9722/mysql:v1
     container_name: mysql
     volumes:
     - mysql:/var/lib/mysql
@@ -34,28 +34,28 @@ services:
       RABBITMQ_DEFAULT_PASS: roboshop123
   user:
     build: ./user
-    image: user:v1
+    image: amer9722/user:v1
     container_name: user
     depends_on:
     - mongodb
     - redis
   cart:
     build: ./cart
-    image: cart:v1
+    image: amer9722/cart:v1
     container_name: cart
     depends_on:
     - redis
     - catalogue
   shipping:
     build: ./shipping
-    image: shipping:v1
+    image: amer9722/shipping:v1
     container_name: shipping
     depends_on:
     - mysql
     - cart
   payment:
     build: ./payment
-    image: payment:v1
+    image: amer9722/payment:v1
     container_name: payment
     depends_on:
     - rabbitmq
@@ -63,7 +63,7 @@ services:
     - user
   frontend:
     build: ./frontend
-    image: frontend:v1
+    image: amer9722/frontend:v1
     container_name: frontend
     ports:
     - "80:80"
@@ -83,3 +83,115 @@ volumes:
   redis:
   mysql:
   rabbitmq:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# services:
+#   catalogue:
+#     build:
+#       context: ./catalogue
+#       dockerfile: Dockerfile
+#     image: catalogue:v1
+#     container_name: catalogue
+#     depends_on:
+#     - mongodb
+#   mongodb:
+#     build: ./mongodb
+#     image: mongodb:v1
+#     container_name: mongodb
+#     volumes:
+#     - mongodb:/data/db
+#   redis:
+#     image: redis:7.0
+#     container_name: redis
+#     volumes:
+#     - redis:/data
+#   mysql:
+#     build: ./mysql
+#     image: mysql:v1
+#     container_name: mysql
+#     volumes:
+#     - mysql:/var/lib/mysql
+#   rabbitmq:
+#     image: rabbitmq:3
+#     container_name: rabbitmq
+#     volumes: # -v rabbitmq:/var/lib/rabbitmq
+#     - rabbitmq:/var/lib/rabbitmq
+#     environment:
+#       RABBITMQ_DEFAULT_USER: roboshop
+#       RABBITMQ_DEFAULT_PASS: roboshop123
+#   user:
+#     build: ./user
+#     image: user:v1
+#     container_name: user
+#     depends_on:
+#     - mongodb
+#     - redis
+#   cart:
+#     build: ./cart
+#     image: cart:v1
+#     container_name: cart
+#     depends_on:
+#     - redis
+#     - catalogue
+#   shipping:
+#     build: ./shipping
+#     image: shipping:v1
+#     container_name: shipping
+#     depends_on:
+#     - mysql
+#     - cart
+#   payment:
+#     build: ./payment
+#     image: payment:v1
+#     container_name: payment
+#     depends_on:
+#     - rabbitmq
+#     - cart
+#     - user
+#   frontend:
+#     build: ./frontend
+#     image: frontend:v1
+#     container_name: frontend
+#     ports:
+#     - "80:80"
+#     depends_on:
+#     - catalogue
+#     - user
+#     - cart
+#     - shipping
+#     - payment
+# networks:
+#   default:
+#     driver: bridge
+#     name: roboshop
+#     external: false # true if you have created network manually using docker network command
+# volumes:
+#   mongodb: # docker volume create mongodb. /var/lib/docker/volumes
+#   redis:
+#   mysql:
+#   rabbitmq:
